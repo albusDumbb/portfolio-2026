@@ -41,24 +41,30 @@ const Contacts = ({ id }) => {
         <>
             <main
                 id={id} 
-                className="w-full min-h-screen bg-[#322D29] flex flex-col gap-16 items-center py-12 px-4"
+                className="w-full min-h-dvh bg-[#322D29] flex flex-col gap-10 md:gap-12 xl:gap-16 items-center py-12 px-4 md:px-8 xl:px-4"
             >
                 <header>
-                    <h1 className="font-claverin text-[15rem] text-[#EFE9E1] leading-none select-none">CONTACTS</h1>
+                    <h1 className="font-claverin text-[4.3rem] sm:text-[5rem] md:text-[8.5rem] xl:text-[15rem] text-[#EFE9E1] leading-none select-none text-center">
+                        CONTACTS
+                    </h1>
                 </header>
 
-                <section className="w-full h-auto flex flex-col gap-12">
+                <section className="w-full h-auto flex flex-col gap-10 md:gap-12 max-w-2xl xl:max-w-none">
                     {/* Description */}
-                    <aside className="flex flex-col gap-6">
-                        <h1 className="font-claverin text-[#EFE9E1] text-[2.25rem] leading-none">Alejandrei Apolo M. Duran</h1>
-                        <p className="text-[#EFE9E1] opacity-50 text-[1.25rem] font-extralight">Frontend Web Developer specializing in responsive web applications, intuitive UI/UX design, and modern web technologies. Experienced in machine learning with a focus on computer vision through academic research.</p>
+                    <aside className="flex flex-col gap-4 md:gap-6">
+                        <h1 className="font-claverin text-[#EFE9E1] text-[1.5rem] sm:text-[1.75rem] md:text-[2rem] xl:text-[2.25rem] leading-none">
+                            Alejandrei Apolo M. Duran
+                        </h1>
+                        <p className="text-[#EFE9E1] opacity-50 text-base md:text-lg xl:text-[1.25rem] font-extralight">
+                            Frontend Web Developer specializing in responsive web applications, intuitive UI/UX design, and modern web technologies. Experienced in machine learning with a focus on computer vision through academic research.
+                        </p>
                     </aside>
 
                     {/* Horizontal Line */}
                     <aside className="w-full h-[1px] rounded-full bg-[#EFE9E1] opacity-50"></aside>
 
                     {/* Contacts */}
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-0">
                         {/* First Col */}
                         <div className="flex flex-col gap-8">
                             {listA.map((data, index) => (
@@ -66,12 +72,12 @@ const Contacts = ({ id }) => {
                                     key={index}
                                     className="flex flex-col "
                                 >
-                                    <span className="text-[#EFE9E1] text-[1rem] font-light flex gap-2 items-center">
+                                    <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light flex gap-2 items-center">
                                         <p>{data.icon}</p>
                                         <p>{data.label}</p>
                                     </span>
 
-                                    <span className="text-[#EFE9E1] text-[1rem] opacity-50 font-light">
+                                    <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
                                         <p>{data.desc}</p>
                                     </span>
                                 </aside>
@@ -85,11 +91,11 @@ const Contacts = ({ id }) => {
                                     key={index}
                                     className="flex flex-col "
                                 >
-                                    <span className="text-[#EFE9E1] text-[1rem] font-light">
+                                    <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light">
                                         <p>{data.label}</p>
                                     </span>
 
-                                    <span className="text-[#EFE9E1] text-[1rem] opacity-50 font-light">
+                                    <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
                                         <p>{data.desc}</p>
                                     </span>
                                 </aside>
@@ -100,11 +106,11 @@ const Contacts = ({ id }) => {
                         <aside
                             className="flex flex-col "
                         >
-                            <span className="text-[#EFE9E1] text-[1rem] font-light">
+                            <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light">
                                 <p>GitHub</p>
                             </span>
 
-                            <span className="text-[#EFE9E1] text-[1rem] opacity-50 font-light">
+                            <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
                                 <p>albusDumbb</p>
                             </span>
                         </aside>

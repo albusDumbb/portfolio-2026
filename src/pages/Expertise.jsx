@@ -103,15 +103,15 @@ const Expertise = ({ id }) => {
             <main
                 id={id} 
                 ref={mainRef}
-                className="w-full min-h-[200vh] bg-[#EFE9E1] flex flex-col gap-8 px-2 pt-8 leading-[1.1]"
+                className="w-full min-h-[200vh] bg-[#EFE9E1] flex flex-col gap-8 px-4 md:px-8 xl:px-2 pt-8 leading-[1.1]"
             >
                 {/* Title Section */}
                 <section 
                     ref={headerRef}
-                    className="sticky top-10 left-0 font-claverin z-10"
+                    className="sticky top-20 md:top-16 xl:top-10 left-0 font-claverin z-10"
                 >
-                    <h1 className="text-[#322D29] text-[4.38rem]">AREA OF</h1>
-                    <h1 className="text-[#322D29] text-[12rem]">EXPERTISE</h1>
+                    <h1 className="text-[#322D29] text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] xl:text-[4.38rem]">AREA OF</h1>
+                    <h1 className="text-[#322D29] text-[4rem] sm:text-[5rem] md:text-[7rem] xl:text-[12rem]">EXPERTISE</h1>
                 </section>
 
                 {/* Paragraph wrapper */}
@@ -120,35 +120,35 @@ const Expertise = ({ id }) => {
                     ref={sectionRef}
                 >
                     {/* First Paragraph */}
-                    <div ref={firstRef} className="w-full flex justify-between">
+                    <div ref={firstRef} className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between">
                         <aside className="h-fit flex items-center gap-4 p-2">
-                            <p className="text-[1rem] text-[#322D29] opacity-50 font-light">001</p>
-                            <p className="text-[1.5rem] text-[#322D29] font-normal">Frontend Web Development</p>
+                            <p className="text-xs md:text-sm xl:text-[1rem] text-[#322D29] opacity-50 font-light">001</p>
+                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Frontend Web Development</p>
                         </aside>
-                        <aside className="w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a Frontend Web Developer, I specialize in building responsive, user-friendly, and visually appealing web applications. I focus on creating clean, accessible interfaces with modern web technologies while ensuring a seamless user experience across different devices.</p>
+                        <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a Frontend Web Developer, I specialize in building responsive, user-friendly, and visually appealing web applications. I focus on creating clean, accessible interfaces with modern web technologies while ensuring a seamless user experience across different devices.</p>
                         </aside>
                     </div>
 
                     {/* Second Paragraph */}
-                    <div ref={secondRef} className="w-full flex justify-between">
+                    <div ref={secondRef} className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between">
                         <aside className="h-fit flex items-center gap-4 p-2">
-                            <p className="text-[1rem] text-[#322D29] opacity-50 font-light">002</p>
-                            <p className="text-[1.5rem] text-[#322D29] font-normal">Backend Development</p>
+                            <p className="text-xs md:text-sm xl:text-[1rem] text-[#322D29] opacity-50 font-light">002</p>
+                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Backend Development</p>
                         </aside>
-                        <aside className="w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-[1rem] text-[#322D29] opacity-50 font-light  leading-snug">As a Backend Developer, I specialize in building robust server-side applications, RESTful APIs, and database management. I focus on creating scalable and secure backend systems that power modern web applications.</p>
+                        <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a Backend Developer, I specialize in building robust server-side applications, RESTful APIs, and database management. I focus on creating scalable and secure backend systems that power modern web applications.</p>
                         </aside>
                     </div>
 
                     {/* Third Paragraph */}
-                    <div ref={thirdRef} className="w-full flex justify-between">
+                    <div ref={thirdRef} className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between">
                         <aside className="h-fit flex items-center gap-4 p-2">
-                            <p className="text-[1rem] text-[#322D29] opacity-50 font-light">003</p>
-                            <p className="text-[1.5rem] text-[#322D29] font-normal">UI/UX Design</p>
+                            <p className="text-xs md:text-sm xl:text-[1rem] text-[#322D29] opacity-50 font-light">003</p>
+                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">UI/UX Design</p>
                         </aside>
-                        <aside className="w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-[1rem] text-[#322D29] opacity-50 font-light  leading-snug">As a UI/UX Designer, I focus on creating intuitive and engaging user experiences. I combine design thinking with user research to craft interfaces that are both beautiful and functional.</p>
+                        <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a UI/UX Designer, I focus on creating intuitive and engaging user experiences. I combine design thinking with user research to craft interfaces that are both beautiful and functional.</p>
                         </aside>
                     </div>
                 </section>
