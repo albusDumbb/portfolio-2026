@@ -1,10 +1,12 @@
-// Projects.jsx
+import { useState } from "react";
 import image1 from "../assets/images/IPTBM-PHOTO.png";
 import image2 from "../assets/images/PESO-PHOTO.png";
 import image3 from "../assets/images/SHROOMTIFIED-PHOTO.jpg";
 import image4 from "../assets/images/THESIS-PHOTO.png";
 
 const Projects = ({ id }) => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
   const cards = [
     {
       label: "DOST-PCAARRD-IPTBM-LB Data Hub",
@@ -14,7 +16,7 @@ const Projects = ({ id }) => {
     {
       label: "Machine Learning-Based Object Detection of Epiphyte Plants, Parasitic Plants, and Host Trees.",
       role: "Frontend Developer, Backend developer, Machine Learning, and UI/UX Design",
-      image: image2,
+      image: image4,
     },
     {
       label: "Shroomtified",
@@ -24,9 +26,13 @@ const Projects = ({ id }) => {
     {
       label: "PESO Career Opportunity Application: Facilitating Job Opportunities and Skill Development",
       role: "Frontend Developer & UI/UX Design",
-      image: image4,
+      image: image2,
     },
   ];
+
+  const handleCardClick = (index) => {
+    setActiveIndex(prev => (prev === index ? null : index));
+  };
 
   return (
     <main id={id} className="w-full min-h-dvh bg-[#EFE9E1] flex flex-col items-center py-6 xl:py-12 px-4 md:px-6 xl:px-4">
@@ -37,42 +43,64 @@ const Projects = ({ id }) => {
       </header>
 
       <section className="grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-2 w-full h-auto">
-        {cards.map((data, index) => (
-          <div key={index} className="h-fit">
-            <div className="group relative h-[280px] sm:h-[350px] md:h-[420px] xl:h-[500px] overflow-hidden rounded-lg bg-[#322D29] shadow-lg hover:shadow-2xl transition-shadow duration-700 cursor-pointer">
-              {/* Background image – hidden until hover */}
+        {cards.map((data, index) => {
+          const isActive = activeIndex === index;
+
+          return (
+            <div key={index} className="h-fit">
               <div
-                className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out opacity-0 scale-100 group-hover:opacity-100 group-hover:scale-110"
-                style={{ backgroundImage: `url(${data.image})` }}
-              />
-              {/* Luxury black overlay */}
-              <div className="absolute inset-0 bg-black transition-opacity duration-700 opacity-0 group-hover:opacity-30" />
+                className="group relative h-[280px] sm:h-[350px] md:h-[420px] xl:h-[500px] overflow-hidden rounded-lg bg-[#322D29] shadow-lg hover:shadow-2xl transition-shadow duration-700 cursor-pointer"
+                onClick={() => handleCardClick(index)}
+              >
+                {/* Background image – hidden until hover or active */}
+                <div
+                  className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out 
+                    opacity-0 scale-100 
+                    group-hover:opacity-100 group-hover:scale-110 
+                    ${isActive ? 'opacity-100 scale-110' : ''}`}
+                  style={{ backgroundImage: `url(${data.image})` }}
+                />
 
-              {/* Centered content – fades out on hover */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 group-hover:opacity-0">
-                {/* Logo – centered */}
-                <span className="font-claverin text-[#EFE9E1] text-4xl sm:text-5xl md:text-6xl font-semibold tracking-wide">
-                  A·A
-                </span>
+                {/* Luxury black overlay */}
+                <div
+                  className={`absolute inset-0 bg-black transition-opacity duration-700 
+                    opacity-0 group-hover:opacity-30 
+                    ${isActive ? 'opacity-30' : ''}`}
+                />
 
-                {/* Hover prompt – top‑left, dot on the right */}
-                <div className="absolute top-4 left-4 md:top-6 md:left-6 flex items-center gap-3 text-[#EFE9E1] text-xs md:text-sm uppercase tracking-widest opacity-40">
-                  <span className="font-general-sans">hover me</span>
-                  {/* Glowing heartbeat dot */}
-                  <span className="relative inline-flex h-3 w-3">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-[#EFE9E1] animate-heartbeat" />
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-[#EFE9E1] animate-ping opacity-75" />
+                {/* Centered content – fades out on hover or active */}
+                <div
+                  className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-700 
+                    group-hover:opacity-0 
+                    ${isActive ? 'opacity-0' : ''}`}
+                >
+                  {/* Logo – centered */}
+                  <span className="font-claverin text-[#EFE9E1] text-4xl sm:text-5xl md:text-6xl font-semibold tracking-wide">
+                    A·A
                   </span>
+
+                  {/* Hover / Click prompt – top‑left */}
+                  <div className="absolute top-4 left-4 md:top-6 md:left-6 flex items-center gap-3 text-[#EFE9E1] text-xs md:text-sm uppercase tracking-widest opacity-40">
+                    {/* Show "hover me" on larger screens (≥sm), "CLICK ME" on smaller */}
+                    <span className="hidden sm:inline font-general-sans">hover me</span>
+                    <span className="sm:hidden font-general-sans">CLICK ME</span>
+                    
+                    {/* Glowing heartbeat dot */}
+                    <span className="relative inline-flex h-3 w-3">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-[#EFE9E1] animate-heartbeat" />
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-[#EFE9E1] animate-ping opacity-75" />
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <aside className="flex flex-col py-4">
-              <p className="text-[#322D29] text-base md:text-lg xl:text-xl font-normal">{data.label}</p>
-              <p className="text-[#322D29] opacity-50 text-sm md:text-base font-light">{data.role}</p>
-            </aside>
-          </div>
-        ))}
+              <aside className="flex flex-col py-4">
+                <p className="text-[#322D29] text-base md:text-lg xl:text-xl font-normal">{data.label}</p>
+                <p className="text-[#322D29] opacity-50 text-sm md:text-base font-light">{data.role}</p>
+              </aside>
+            </div>
+          );
+        })}
       </section>
 
       {/* Heartbeat animation */}

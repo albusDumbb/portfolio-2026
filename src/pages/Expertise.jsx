@@ -126,7 +126,7 @@ const Expertise = ({ id }) => {
                             <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Frontend Web Development</p>
                         </aside>
                         <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a Frontend Web Developer, I specialize in building responsive, user-friendly, and visually appealing web applications. I focus on creating clean, accessible interfaces with modern web technologies while ensuring a seamless user experience across different devices.</p>
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">Frontend Web Developer specializing in building responsive, user-friendly, and accessible web applications using HTML, CSS, JavaScript, React.js, and Tailwind CSS. Dedicated to turning design concepts into clean, high-performing user interfaces with smooth cross-device experiences.</p>
                         </aside>
                     </div>
 
@@ -134,10 +134,10 @@ const Expertise = ({ id }) => {
                     <div ref={secondRef} className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between">
                         <aside className="h-fit flex items-center gap-4 p-2">
                             <p className="text-xs md:text-sm xl:text-[1rem] text-[#322D29] opacity-50 font-light">002</p>
-                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Backend Development</p>
+                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">UI/UX Design</p>
                         </aside>
                         <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a Backend Developer, I specialize in building robust server-side applications, RESTful APIs, and database management. I focus on creating scalable and secure backend systems that power modern web applications.</p>
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">UI/UX Designer specializing in crafting intuitive digital products in Figma. I combine design thinking and user research to turn complex ideas into clean, functional, and visually engaging interfaces.</p>
                         </aside>
                     </div>
 
@@ -145,10 +145,10 @@ const Expertise = ({ id }) => {
                     <div ref={thirdRef} className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between">
                         <aside className="h-fit flex items-center gap-4 p-2">
                             <p className="text-xs md:text-sm xl:text-[1rem] text-[#322D29] opacity-50 font-light">003</p>
-                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">UI/UX Design</p>
+                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Machine Learning</p>
                         </aside>
                         <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">As a UI/UX Designer, I focus on creating intuitive and engaging user experiences. I combine design thinking with user research to craft interfaces that are both beautiful and functional.</p>
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">Machine Learning focused on building intelligent computer vision models using Python. I handle the complete data lifecycle, from data gathering and annotation to preprocessing—to train, evaluate, and deliver accurate, reliable ML solutions.</p>
                         </aside>
                     </div>
                 </section>

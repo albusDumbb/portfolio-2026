@@ -5,7 +5,7 @@ const DOT_GAP = 22; // px offset of the left/right dots from center
 const PULSE_MS = 3000; // three-dot loading animation duration
 const CONVERGE_MS = 550; // outer dots sliding into the center dot
 const HOLD_MS = 200; // brief pause once merged into one dot
-const SLIDE_MS = 650; // A letters sliding outward
+const SLIDE_MS = 3000; // A letters sliding outward
 const REVEAL_MS = 900; // logo stays fully visible before closing
 const EXIT_MS = 800; // closing fade/scale transition
 const AUTO_DISMISS_MS =
@@ -63,12 +63,12 @@ const Intro = ({ onFinish }) => {
 
         @keyframes slideOutLeft {
           0% { transform: translateX(0); opacity: 0; }
-          100% { transform: translateX(-0.55em); opacity: 1; }
+          100% { transform: translateX(-0.25em); opacity: 1; }
         }
 
         @keyframes slideOutRight {
           0% { transform: translateX(0); opacity: 0; }
-          100% { transform: translateX(0.55em); opacity: 1; }
+          100% { transform: translateX(0.25em); opacity: 1; }
         }
 
         @keyframes introExit {
