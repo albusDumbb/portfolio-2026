@@ -8,7 +8,7 @@ const Home = ({ id }) => {
                 className="relative w-full min-h-dvh bg-[#EFE9E1] flex justify-center items-center px-4"
             >
                 <section className="text-center">
-                    <h1 className="text-[2.75rem] sm:text-[3.5rem] md:text-[5.5rem] xl:text-[8.125rem] font-claverin tracking-wide text-[#322D29] leading-tight">
+                    <h1 className="text-[3.4rem] sm:text-[5rem] md:text-[5.5rem] xl:text-[8.125rem] font-claverin tracking-wide text-[#322D29] leading-tight">
                         ALEJANDREI
                     </h1>
                     <h2 className="text-[0.875rem] md:text-[1rem] xl:text-[1.25rem] font-claverin tracking-wide text-[#322D29]">
