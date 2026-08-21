@@ -103,7 +103,7 @@ const Expertise = ({ id }) => {
             <main
                 id={id} 
                 ref={mainRef}
-                className="w-full min-h-[200vh] bg-[#EFE9E1] flex flex-col gap-8 px-4 md:px-8 xl:px-2 pt-8 leading-[1.1]"
+                className="w-full min-h-[235vh] bg-[#EFE9E1] flex flex-col gap-8 px-4 md:px-8 xl:px-2 pt-8 leading-[1.1]"
             >
                 {/* Title Section */}
                 <section 
@@ -123,10 +123,10 @@ const Expertise = ({ id }) => {
                     <div ref={firstRef} className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between">
                         <aside className="h-fit flex items-center gap-4 p-2">
                             <p className="text-xs md:text-sm xl:text-[1rem] text-[#322D29] opacity-50 font-light">001</p>
-                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Frontend Web Development</p>
+                            <p className="text-base md:text-lg xl:text-[1.5rem] text-[#322D29] font-normal">Full stack Web Development</p>
                         </aside>
                         <aside className="w-full xl:w-[700px] flex items-center gap-4 p-2">
-                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">Frontend Web Developer specializing in building responsive, user-friendly, and accessible web applications using HTML, CSS, JavaScript, React.js, and Tailwind CSS. Dedicated to turning design concepts into clean, high-performing user interfaces with smooth cross-device experiences.</p>
+                            <p className="text-sm md:text-base xl:text-[1rem] text-[#322D29] opacity-50 font-light leading-snug">Full-Stack Web Developer specializing in building responsive, user-friendly, and scalable web applications using HTML, CSS, JavaScript, React.js, Tailwind CSS, Node.js, Express.js, MySQL, and PostgreSQL. Experienced in developing both frontend interfaces and backend systems, from creating clean and accessible user experiences to designing APIs and managing databases. Dedicated to delivering high-performing, maintainable, and reliable web solutions that provide seamless experiences across devices and platforms.</p>
                         </aside>
                     </div>
 

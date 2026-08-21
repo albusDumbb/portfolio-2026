@@ -66,6 +66,70 @@ html.lenis, html.lenis body {
   margin-top: 0;
 }
 
+/* Desktop navbar slide animations */
+/* Initial hidden state: all centered and invisible */
+.nav-item-start {
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: none;
+}
+
+/* Individual slide animations */
+@keyframes slideNavLeft1 {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to { left: 0; transform: translateX(0); opacity: 1; }
+}
+@keyframes slideNavLeft2 {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to { left: 28%; transform: translateX(-50%); opacity: 1; }
+}
+@keyframes slideNavCenter {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to { left: 50%; transform: translateX(-50%); opacity: 1; }
+}
+@keyframes slideNavRight1 {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to { left: 72%; transform: translateX(-50%); opacity: 1; }
+}
+@keyframes slideNavRight2 {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to { left: 100%; transform: translateX(-100%); opacity: 1; }
+}
+
+/* Animation classes with same delay as footer (1.3s) */
+.animate-nav-left-1 {
+  animation: slideNavLeft1 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+.animate-nav-left-2 {
+  animation: slideNavLeft2 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+.animate-nav-center {
+  animation: slideNavCenter 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+.animate-nav-right-1 {
+  animation: slideNavRight1 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+.animate-nav-right-2 {
+  animation: slideNavRight2 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+
+/* ---- Mobile nav simple fade-in (same timing) ---- */
+@keyframes fadeInNav {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-mobile-nav {
+  animation: fadeInNav 0.6s ease-out forwards;
+  animation-delay: 1.3s;
+  opacity: 0;
+}
+
 @font-face {
   font-family: "Claverin";
   src: url("./assets/fonts/claverin-regular.ttf") format("truetype");
@@ -115,6 +179,93 @@ html.lenis, html.lenis body {
   --font-claverin: "Claverin", serif;
   --font-general-sans: "General Sans", sans-serif;
   --font-montserrat: "Montserrat", sans-serif;
+}
+
+/* Home */
+/* Main & subtitle slide-up */
+@keyframes slideInUpShallow {
+  from { transform: translateY(350px); }
+  to { transform: translateY(0); }
+}
+.animate-slide-in-up-shallow {
+  animation: slideInUpShallow 1s ease-out forwards;
+}
+
+@keyframes slideInUpDeep {
+  from { transform: translateY(400px); }
+  to { transform: translateY(0); }
+}
+.animate-slide-in-up-deep {
+  animation: slideInUpDeep 1s ease-out forwards;
+}
+
+/* Delays for title and subtitle */
+.delay-200 { animation-delay: 0.2s; }   /* added back – main title first */
+.delay-700 { animation-delay: 0.3s; }   /* Bachelor appears after */
+
+/* --- Footer slide-out animations (with opacity) --- */
+@keyframes slideLeft {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to   { left: 0; transform: translateX(0); opacity: 1; }
+}
+@keyframes slideCenter {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to   { left: 50%; transform: translateX(-50%); opacity: 1; }
+}
+@keyframes slideRight {
+  from { left: 50%; transform: translateX(-50%); opacity: 0; }
+  to   { left: 100%; transform: translateX(-100%); opacity: 1; }
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.8s ease-out forwards;
+}
+.animate-slide-center {
+  animation: slideCenter 0.8s ease-out forwards;
+}
+.animate-slide-right {
+  animation: slideRight 0.8s ease-out forwards;
+}
+
+/* Footer delay – starts after Bachelor (0.3s delay + 1s duration = 1.3s) */
+.delay-footer {
+  animation-delay: 1.3s;
+}
+
+/* Initial state: hidden and centered */
+.footer-item-start {
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+/* Project */
+@keyframes heartbeat {
+0%, 100% {
+  transform: scale(0.75);
+  opacity: 0.6;
+}
+14% {
+  transform: scale(1.3);
+  opacity: 1;
+}
+28% {
+  transform: scale(0.85);
+  opacity: 0.8;
+}
+42% {
+  transform: scale(1.2);
+  opacity: 1;
+}
+70% {
+  transform: scale(0.75);
+  opacity: 0.6;
+}
+}
+
+.animate-heartbeat {
+animation: heartbeat 1.8s ease-in-out infinite;
+box-shadow: 0 0 12px 4px rgba(239, 233, 225, 0.3);
 }
 
 

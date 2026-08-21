@@ -2,7 +2,7 @@ import TextReveal from "../components/Animation/TextReveal";
 
 const About = ({ id }) => {
   const paragraphText =
-    "I am a Computer Science graduate specializing in frontend web development with a passion for creating clean, responsive, and user-friendly interfaces. I enjoy designing my own UIs and have a strong interest in UI/UX design. Beyond frontend development, I have experience in backend development and applied machine learning in my undergraduate thesis.";
+    "I am a Full-Stack Web Developer with a strong foundation in building modern, scalable, and user-centered web applications. I enjoy transforming ideas into intuitive digital experiences by combining clean frontend design with robust backend functionality. With experience across the full development lifecycle—from UI/UX design and API integration to database management and deployment—I am passionate about creating solutions that are both visually appealing and technically efficient. I am continuously learning and exploring new technologies to deliver better products and meaningful user experiences. I enjoy building applications that not only work efficiently but also provide meaningful and intuitive experiences for users.";
 
   return (
     <main

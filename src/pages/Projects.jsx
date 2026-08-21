@@ -7,31 +7,35 @@ import image4 from "../assets/images/THESIS-PHOTO.png";
 const Projects = ({ id }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const cards = [
-    {
-      label: "DOST-PCAARRD-IPTBM-LB Data Hub",
-      role: "Frontend Developer and UI/UX Design",
-      image: image1,
-    },
-    {
-      label: "Machine Learning-Based Object Detection of Epiphyte Plants, Parasitic Plants, and Host Trees.",
-      role: "Frontend Developer, Backend developer, Machine Learning, and UI/UX Design",
-      image: image4,
-    },
-    {
-      label: "Shroomtified",
-      role: "Frontend Developer, Backend developer, Machine Learning, and UI/UX Design",
-      image: image3,
-    },
-    {
-      label: "PESO Career Opportunity Application: Facilitating Job Opportunities and Skill Development",
-      role: "Frontend Developer & UI/UX Design",
-      image: image2,
-    },
-  ];
+ const cards = [
+  {
+    label: "DOST-PCAARRD-IPTBM-LB Data Hub",
+    role: "Frontend Developer and UI/UX Design",
+    image: image1,
+    link: "https://lspuiptbm.netlify.app/",
+  },
+  {
+    label: "Machine Learning-Based Object Detection...",
+    role: "Frontend Developer, Backend developer, Machine Learning, and UI/UX Design",
+    image: image4,
+    link: "",
+  },
+  {
+    label: "Shroomtified",
+    role: "Frontend Developer, Backend developer, Machine Learning, and UI/UX Design",
+    image: image3,
+    link: "",
+  },
+  {
+    label: "PESO Career Opportunity Application...",
+    role: "Frontend Developer & UI/UX Design",
+    image: image2,
+    link: "",
+  },
+];
 
-  const handleCardClick = (index) => {
-    setActiveIndex(prev => (prev === index ? null : index));
+  const handleCardClick = (link) => {
+    window.open(link, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -50,7 +54,7 @@ const Projects = ({ id }) => {
             <div key={index} className="h-fit">
               <div
                 className="group relative h-[280px] sm:h-[350px] md:h-[420px] xl:h-[500px] overflow-hidden rounded-lg bg-[#322D29] shadow-lg hover:shadow-2xl transition-shadow duration-700 cursor-pointer"
-                onClick={() => handleCardClick(index)}
+                onClick={() => handleCardClick(data.link)}
               >
                 {/* Background image – hidden until hover or active */}
                 <div
@@ -102,37 +106,6 @@ const Projects = ({ id }) => {
           );
         })}
       </section>
-
-      {/* Heartbeat animation */}
-      <style>{`
-        @keyframes heartbeat {
-          0%, 100% {
-            transform: scale(0.75);
-            opacity: 0.6;
-          }
-          14% {
-            transform: scale(1.3);
-            opacity: 1;
-          }
-          28% {
-            transform: scale(0.85);
-            opacity: 0.8;
-          }
-          42% {
-            transform: scale(1.2);
-            opacity: 1;
-          }
-          70% {
-            transform: scale(0.75);
-            opacity: 0.6;
-          }
-        }
-
-        .animate-heartbeat {
-          animation: heartbeat 1.8s ease-in-out infinite;
-          box-shadow: 0 0 12px 4px rgba(239, 233, 225, 0.3);
-        }
-      `}</style>
     </main>
   );
 };

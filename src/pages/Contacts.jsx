@@ -56,7 +56,7 @@ const Contacts = ({ id }) => {
                             Alejandrei Apolo M. Duran
                         </h1>
                         <p className="text-[#EFE9E1] opacity-50 text-base md:text-lg xl:text-[1.25rem] font-extralight">
-                            Frontend Web Developer specializing in responsive web applications, intuitive UI/UX design, and modern web technologies. Experienced in machine learning with a focus on computer vision through academic research.
+                            Full-Stack Web Developer specializing in modern web applications, intuitive user experiences, and scalable backend solutions. Passionate about building efficient, user-centered digital products and continuously learning new technologies.
                         </p>
                     </aside>
 
