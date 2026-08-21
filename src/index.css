@@ -66,59 +66,6 @@ html.lenis, html.lenis body {
   margin-top: 0;
 }
 
-/* Desktop navbar slide animations */
-/* Initial hidden state: all centered and invisible */
-.nav-item-start {
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: none;
-}
-
-/* Individual slide animations */
-@keyframes slideNavLeft1 {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to { left: 0; transform: translateX(0); opacity: 1; }
-}
-@keyframes slideNavLeft2 {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to { left: 28%; transform: translateX(-50%); opacity: 1; }
-}
-@keyframes slideNavCenter {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to { left: 50%; transform: translateX(-50%); opacity: 1; }
-}
-@keyframes slideNavRight1 {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to { left: 72%; transform: translateX(-50%); opacity: 1; }
-}
-@keyframes slideNavRight2 {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to { left: 100%; transform: translateX(-100%); opacity: 1; }
-}
-
-/* Animation classes with same delay as footer (1.3s) */
-.animate-nav-left-1 {
-  animation: slideNavLeft1 0.8s ease-out forwards;
-  animation-delay: 1.3s;
-}
-.animate-nav-left-2 {
-  animation: slideNavLeft2 0.8s ease-out forwards;
-  animation-delay: 1.3s;
-}
-.animate-nav-center {
-  animation: slideNavCenter 0.8s ease-out forwards;
-  animation-delay: 1.3s;
-}
-.animate-nav-right-1 {
-  animation: slideNavRight1 0.8s ease-out forwards;
-  animation-delay: 1.3s;
-}
-.animate-nav-right-2 {
-  animation: slideNavRight2 0.8s ease-out forwards;
-  animation-delay: 1.3s;
-}
-
 /* ---- Mobile nav simple fade-in (same timing) ---- */
 @keyframes fadeInNav {
   from { opacity: 0; transform: translateY(-8px); }
@@ -136,7 +83,6 @@ html.lenis, html.lenis body {
   font-weight: 400;
   font-style: normal;
 }
-
 /* General Sans Font */
 @font-face {
   font-family: "General Sans";
@@ -188,7 +134,7 @@ html.lenis, html.lenis body {
   to { transform: translateY(0); }
 }
 .animate-slide-in-up-shallow {
-  animation: slideInUpShallow 1s ease-out forwards;
+  animation: slideInUpShallow 1.5s ease-out forwards;
 }
 
 @keyframes slideInUpDeep {
@@ -196,48 +142,37 @@ html.lenis, html.lenis body {
   to { transform: translateY(0); }
 }
 .animate-slide-in-up-deep {
-  animation: slideInUpDeep 1s ease-out forwards;
+  animation: slideInUpDeep 1.5s ease-out forwards;
 }
 
 /* Delays for title and subtitle */
 .delay-200 { animation-delay: 0.2s; }   /* added back – main title first */
 .delay-700 { animation-delay: 0.3s; }   /* Bachelor appears after */
 
-/* --- Footer slide-out animations (with opacity) --- */
-@keyframes slideLeft {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to   { left: 0; transform: translateX(0); opacity: 1; }
-}
-@keyframes slideCenter {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to   { left: 50%; transform: translateX(-50%); opacity: 1; }
-}
-@keyframes slideRight {
-  from { left: 50%; transform: translateX(-50%); opacity: 0; }
-  to   { left: 100%; transform: translateX(-100%); opacity: 1; }
+/* --- Footer animations --- */
+@keyframes slideInUpFooter {
+  from {
+    transform: translateY(250px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.animate-slide-left {
-  animation: slideLeft 0.8s ease-out forwards;
-}
-.animate-slide-center {
-  animation: slideCenter 0.8s ease-out forwards;
-}
-.animate-slide-right {
-  animation: slideRight 0.8s ease-out forwards;
+.animate-slide-in-up-footer {
+  opacity: 0;
+  transform: translateY(250px);
+  animation: slideInUpFooter 1.5s ease-out 0.7s forwards;
+  animation-fill-mode: both;
 }
 
 /* Footer delay – starts after Bachelor (0.3s delay + 1s duration = 1.3s) */
 .delay-footer {
-  animation-delay: 1.3s;
+  animation-delay: 0.7s;
 }
 
-/* Initial state: hidden and centered */
-.footer-item-start {
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-}
 
 /* Project */
 @keyframes heartbeat {

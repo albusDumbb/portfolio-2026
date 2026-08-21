@@ -30,29 +30,38 @@ const Home = ({ id }) => {
           </div>
         </section>
 
-        {/* Footer with three items sliding from center */}
+        {/* Footer Text */}
         <section className="absolute bottom-6 md:bottom-8 xl:bottom-10 w-full h-auto px-6 md:px-8">
           <div className="relative w-full flex justify-center items-center" style={{ minHeight: '4rem' }}>
             {/* Left item */}
-            <p
-              className={`${footerTextStyle} absolute footer-item-start animate-slide-left delay-footer`}
-            >
-              UI/UX <br/> Design
-            </p>
+            <div className="absolute left-0 overflow-hidden">
+              <p
+                className={`${footerTextStyle} animate-slide-in-up-footer delay-footer`}
+                style={{ transform: "translateY(250px)" }}
+              >
+                UI/UX <br /> Design
+              </p>
+            </div>
 
             {/* Center item */}
-            <p
-              className={`${footerTextStyle} absolute footer-item-start animate-slide-center delay-footer`}
-            >
-              Full stack <br/> Web Developer
-            </p>
+            <div className="absolute left-1/2 -translate-x-1/2 overflow-hidden">
+              <p
+                className={`${footerTextStyle} animate-slide-in-up-footer delay-footer`}
+                style={{ transform: "translateY(250px)" }}
+              >
+                Full stack <br /> Web Developer
+              </p>
+            </div>
 
             {/* Right item */}
-            <p
-              className={`${footerTextStyle} absolute footer-item-start animate-slide-right delay-footer`}
-            >
-              Machine <br/> Learning
-            </p>
+            <div className="absolute right-0 overflow-hidden">
+              <p
+                className={`${footerTextStyle} animate-slide-in-up-footer delay-footer`}
+                style={{ transform: "translateY(250px)" }}
+              >
+                Machine <br /> Learning
+              </p>
+            </div>
           </div>
         </section>
       </main>

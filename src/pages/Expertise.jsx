@@ -103,7 +103,7 @@ const Expertise = ({ id }) => {
             <main
                 id={id} 
                 ref={mainRef}
-                className="w-full min-h-[235vh] bg-[#EFE9E1] flex flex-col gap-8 px-4 md:px-8 xl:px-2 pt-8 leading-[1.1]"
+                className="w-full min-h-[250vh] bg-[#EFE9E1] flex flex-col gap-8 px-4 md:px-8 xl:px-2 pt-8 leading-[1.1]"
             >
                 {/* Title Section */}
                 <section 

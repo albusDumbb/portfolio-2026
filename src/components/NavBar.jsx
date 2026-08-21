@@ -58,54 +58,63 @@ const NavBar = () => {
           transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
         }}
       >
-        {/* XL DESKTOP NAV - with slide-from-center animation */}
-        <nav className="hidden xl:flex w-full justify-between items-center text-[#322D29] transition-all duration-500 font-general-sans relative py-4">
+        <nav className="hidden xl:flex w-full justify-between items-center text-[#322D29] transition-all duration-500 font-general-sans">
           {/* All items start centered, then slide to positions */}
           
-          {/* HOME - slides to far left */}
-          <a
-            href="#home"
-            onClick={(e) => handleNavClick(e, '#home')}
-            className="absolute nav-item-start animate-nav-left-1"
-          >
-            HOME
-          </a>
+          {/* HOME */}
+          <div className="overflow-hidden">
+            <a
+              href="#home"
+              onClick={(e) => handleNavClick(e, '#home')}
+              className="block animate-slide-in-up-footer"
+            >
+              HOME
+            </a>
+          </div>
 
-          {/* ABOUT - slides to left-center */}
-          <a
-            href="#about"
-            onClick={(e) => handleNavClick(e, '#about')}
-            className="absolute nav-item-start animate-nav-left-2"
-          >
-            ABOUT
-          </a>
+          {/* ABOUT */}
+          <div className="overflow-hidden">
+            <a
+              href="#about"
+              onClick={(e) => handleNavClick(e, '#about')}
+              className="block animate-slide-in-up-footer"
+            >
+              ABOUT
+            </a>
+          </div>
 
-          {/* A·A - stays centered */}
-          <a
-            href="#home"
-            onClick={(e) => handleNavClick(e, '#home')}
-            className="absolute nav-item-start animate-nav-center font-claverin text-3xl font-semibold"
-          >
-            A·A
-          </a>
+          {/* A·A */}
+         <div className="overflow-hidden">
+            <a
+              href="#home"
+              onClick={(e) => handleNavClick(e, '#home')}
+              className="block animate-slide-in-up-footer font-claverin text-3xl font-semibold"
+            >
+              A·A
+            </a>
+          </div>
 
-          {/* EXPERTISE - slides to right-center */}
-          <a
-            href="#expertise"
-            onClick={(e) => handleNavClick(e, '#expertise')}
-            className="absolute nav-item-start animate-nav-right-1"
-          >
-            EXPERTISE
-          </a>
+          {/* EXPERTISE */}
+          <div className="overflow-hidden">
+            <a
+              href="#expertise"
+              onClick={(e) => handleNavClick(e, '#expertise')}
+              className="block animate-slide-in-up-footer"
+            >
+              EXPERTISE
+            </a>
+          </div>
 
-          {/* CONTACTS - slides to far right */}
-          <a
-            href="#contacts"
-            onClick={(e) => handleNavClick(e, '#contacts')}
-            className="absolute nav-item-start animate-nav-right-2"
-          >
-            CONTACTS
-          </a>
+          {/* CONTACTS */}
+          <div className="overflow-hidden">
+            <a
+              href="#contacts"
+              onClick={(e) => handleNavClick(e, '#contacts')}
+              className="block animate-slide-in-up-footer"
+            >
+              CONTACTS
+            </a>
+          </div>
         </nav>
 
         {/* MOBILE / TABLET NAV - simple fade-in */}
