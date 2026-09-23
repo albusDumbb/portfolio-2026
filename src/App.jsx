@@ -1,5 +1,5 @@
 // src/pages/App.jsx
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Pages
@@ -13,28 +13,32 @@ import Intro from './components/Intro';
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [showApp, setShowApp] = useState(false);
 
-  const handleIntroFinish = () => {
-    setShowIntro(false);
-  };
+  // Stable callbacks so Intro's timers aren't restarted when App re-renders
+  const handleIntroExitStart = useCallback(() => setShowApp(true), []);
+  const handleIntroFinish = useCallback(() => setShowIntro(false), []);
 
-  // If intro is active, render only the intro
-  if (showIntro) {
-    return <Intro onFinish={handleIntroFinish} />;
-  }
-
-  // Otherwise, render your full app with router
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route path="home" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="expertise" element={<Expertise />} />
-        <Route path="contacts" element={<Contacts />} />
-        <Route path="navbar" element={<NavBar />} />
-      </Routes>
-    </Router>
+    <>
+      {/* The site mounts underneath as the intro starts fading out, so the fade reveals it */}
+      {showApp && (
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout />} />
+            <Route path="home" element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="expertise" element={<Expertise />} />
+            <Route path="contacts" element={<Contacts />} />
+            <Route path="navbar" element={<NavBar />} />
+          </Routes>
+        </Router>
+      )}
+
+      {showIntro && (
+        <Intro onExitStart={handleIntroExitStart} onFinish={handleIntroFinish} />
+      )}
+    </>
   );
 }
 
