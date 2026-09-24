@@ -4,10 +4,33 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TextReveal = ({ children, className = "" }) => {
+// Splits the text into words. Wrap a phrase in *asterisks* to highlight it
+// (rendered in Claverin), e.g. "I'm a *Full-Stack Web Developer* who…"
+const parseWords = (text) => {
+  let inHighlight = false;
+  return text.split(" ").map((raw) => {
+    let word = raw;
+    if (word.startsWith("*")) {
+      inHighlight = true;
+      word = word.slice(1);
+    }
+    const highlight = inHighlight;
+    if (word.includes("*")) {
+      word = word.replace("*", "");
+      inHighlight = false;
+    }
+    return { word, highlight };
+  });
+};
+
+const TextReveal = ({
+  children,
+  className = "",
+  textClassName = "font-general-sans text-[1.75rem] md:text-[2.5rem] xl:text-[3.25rem] leading-tight font-extralight text-[#EFE9E1]",
+}) => {
   const ref = useRef(null);
   // Memoized so re-renders don't hand the effect a new array and re-run it
-  const words = useMemo(() => children.split(" "), [children]);
+  const words = useMemo(() => parseWords(children), [children]);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -30,14 +53,15 @@ const TextReveal = ({ children, className = "" }) => {
       const totalWords = words.length;
       const durationPerWord = 1 / totalWords;
 
+      // Words start faint and blurred, and sharpen to full strength
       wordElements.forEach((el, i) => {
         const startTime = i / totalWords;
         tl.fromTo(
           el,
-          { filter: "blur(12px)", opacity: 0 },
+          { filter: "blur(12px)", opacity: 0.1 },
           {
             filter: "blur(0px)",
-            opacity: 0.5,
+            opacity: 1,
             duration: durationPerWord,
             ease: "power1.out",
           },
@@ -56,19 +80,19 @@ const TextReveal = ({ children, className = "" }) => {
     <div ref={ref} className={className}>
       {/* Mobile (below md): flowing text so it can be justified – straight left and right edges.
           md and up: the original centered flex layout. */}
-      <div className="flex flex-wrap justify-center gap-x-1.5 gap-y-2 text-center max-md:block max-md:text-justify max-md:leading-[1.7] text-[1.5rem] xl:text-[2.19rem] font-extralight text-[#EFE9E1]">
-        {words.map((word, index) => (
+      <div className={`flex flex-wrap justify-center gap-x-1.5 gap-y-2 text-center max-md:block max-md:text-justify ${textClassName}`}>
+        {words.map(({ word, highlight }, index) => (
           <Fragment key={index}>
             <span
-              className="word inline-block"
+              className={`word inline-block ${highlight ? "font-claverin font-normal" : ""}`}
               style={{
                 filter: "blur(12px)",
-                opacity: 0,
+                opacity: 0.1,
               }}
             >
               {word}
               {/* Fixed word spacing for the flex layout; hidden on mobile, where the real space below is stretched to justify */}
-              {index < words.length - 1 && <span className="max-md:hidden">{" "}</span>}
+              {index < words.length - 1 && <span className="max-md:hidden">{" "}</span>}
             </span>
             {/* Real space between words – what the browser stretches when justifying (ignored by the flex layout) */}
             {index < words.length - 1 && " "}

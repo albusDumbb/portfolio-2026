@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+/* Satoshi Light – secondary titles (Expertise rows, project names, Contacts name) */
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@300&display=swap");
 @import "tailwindcss";
 
 * {
@@ -12,6 +12,25 @@
 
 p{
     font-family: "General Sans", sans-serif;
+}
+
+/* Custom cursor (components/Cursor) – hide the native cursor on mouse devices,
+   but keep the normal text cursor wherever you type */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+html.has-custom-cursor input,
+html.has-custom-cursor textarea,
+html.has-custom-cursor [contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* Text highlight – bronze instead of the browser's default blue.
+   Dark brown text stays readable on it over both the cream and the dark sections. */
+::selection {
+  background-color: #A68A64;
+  color: #322D29;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
@@ -64,6 +83,93 @@ html.lenis, html.lenis body {
   box-shadow: none;
   border-radius: 0;
   margin-top: 0;
+}
+
+/* ---- Hide on scroll down / reveal on scroll up – "retracting capsule" ----
+   Hide:   contents fade → bar shrinks to a small capsule → capsule lifts away
+   Reveal: capsule drops in → expands into the bar → contents fade back in */
+.navbar-header nav {
+  transition: opacity 0.35s ease;
+}
+
+.navbar-header.nav-hidden {
+  width: 120px;
+  padding: 12px 24px;
+  margin-top: 8px;
+  background: rgba(239, 233, 225, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(calc(-100% - 16px));
+  pointer-events: none;
+  transition:
+    width 0.55s cubic-bezier(0.76, 0, 0.24, 1),
+    padding 0.55s cubic-bezier(0.76, 0, 0.24, 1),
+    border-radius 0.55s cubic-bezier(0.76, 0, 0.24, 1),
+    margin-top 0.55s cubic-bezier(0.76, 0, 0.24, 1),
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1) 0.45s,
+    opacity 0.3s ease 0.65s;
+}
+.navbar-header.nav-hidden nav {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-header.nav-revealing {
+  overflow: hidden;
+  transition:
+    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.25s ease,
+    width 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
+    padding 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
+    border-radius 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
+    margin-top 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
+    background-color 0.6s ease 0.4s,
+    box-shadow 0.6s ease 0.4s;
+}
+.navbar-header.nav-revealing nav {
+  transition: opacity 0.35s ease 0.8s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-header,
+  .navbar-header nav,
+  .navbar-header.nav-hidden,
+  .navbar-header.nav-revealing,
+  .navbar-header.nav-revealing nav {
+    transition-duration: 0.01s;
+    transition-delay: 0s;
+  }
+}
+
+/* Intro handoff (components/Intro): the intro's A·A flies into the navbar logo's spot.
+   While it's flying, the real logo is hidden and its own slide-in is skipped;
+   once it lands, the real logo takes over in place. */
+html.intro-handoff .navbar-logo {
+  animation: none !important;
+  transform: none !important;
+  opacity: 0 !important;
+}
+html.intro-done .navbar-logo {
+  animation: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  /* Fades in while the intro's logo fades out on top of it (a crossfade, not a pop).
+     Keeps the color transition the logo already had for the menu. */
+  transition: opacity 0.6s ease-in-out, color 0.5s ease !important;
+}
+
+/* Menu open: drop the scrolled pill so the header sits cleanly on the dark overlay */
+.navbar-header.menu-open {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
 }
 
 /* ---- Mobile nav simple fade-in (same timing) ---- */
@@ -124,7 +230,7 @@ html.lenis, html.lenis body {
 @theme {
   --font-claverin: "Claverin", serif;
   --font-general-sans: "General Sans", sans-serif;
-  --font-montserrat: "Montserrat", sans-serif;
+  --font-satoshi: "Satoshi", "General Sans", sans-serif;
 }
 
 /* Home */
@@ -171,6 +277,32 @@ html.lenis, html.lenis body {
 /* Footer delay – starts after Bachelor (0.3s delay + 1s duration = 1.3s) */
 .delay-footer {
   animation-delay: 0.7s;
+}
+
+
+/* Expertise – "Scroll" hint on the empty progress bar */
+@keyframes hintNudge {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
+.animate-hint-nudge {
+  animation: hintNudge 1.4s ease-in-out infinite;
+}
+
+/* A soft light gliding along the empty track */
+@keyframes hintGlide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(500%); }
+}
+.animate-hint-glide {
+  animation: hintGlide 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hint-nudge,
+  .animate-hint-glide {
+    animation: none;
+  }
 }
 
 

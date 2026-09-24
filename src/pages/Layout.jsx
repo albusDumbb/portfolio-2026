@@ -3,6 +3,7 @@ import Lenis from 'lenis';
 
 // Components
 import NavBar from "../components/NavBar";
+import Cursor from "../components/Cursor/Cursor";
 
 // Pages
 import Home from "./Home";
@@ -43,6 +44,7 @@ const Layout = () => {
 
   return (
     <main className="w-full min-h-screen flex flex-col bg-slate-950 text-slate-100">
+      <Cursor />
       <NavBar />
       {/* Each section has an id that matches the navbar href */}
       <Home id="home" />

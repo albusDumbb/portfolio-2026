@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      {/* The site mounts underneath as the intro starts fading out, so the fade reveals it */}
+      {/* The site mounts underneath as the intro's curtain starts lifting, so the curtain reveals it */}
       {showApp && (
         <Router>
           <Routes>

@@ -1,194 +1,231 @@
 // src/components/Intro.jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
-const DOT_GAP = 22; // px offset of the left/right dots from center
-const PULSE_MS = 3000; // three-dot loading animation duration
-const CONVERGE_MS = 550; // outer dots sliding into the center dot
-const HOLD_MS = 200; // brief pause once merged into one dot
-const SLIDE_MS = 3000; // A letters sliding outward
-const REVEAL_MS = 900; // logo stays fully visible before closing
-const EXIT_MS = 800; // closing fade/scale transition
-const AUTO_DISMISS_MS =
-  PULSE_MS + CONVERGE_MS + HOLD_MS + SLIDE_MS + REVEAL_MS + EXIT_MS;
+const BROWN = '#322D29';
+const CREAM = '#EFE9E1';
+const BRONZE = '#A68A64';
+const EASE = 'power4.inOut'; // close to the site's cubic-bezier(0.76, 0, 0.24, 1)
 
+// Pause (s) once A·A has fully formed, before the curtain lifts
+const HOLD = 0.8;
+
+// Never keep visitors waiting longer than this for assets to load (ms)
+const MAX_LOAD_WAIT = 6000;
+
+// Resolves once the fonts (Claverin especially) and the page's own assets have loaded
+const waitForAssets = () => {
+  const fonts = Promise.all([
+    document.fonts.load('48px Claverin'),
+    document.fonts.ready,
+  ]).catch(() => {});
+  const page = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
+  const timeout = new Promise((resolve) => setTimeout(resolve, MAX_LOAD_WAIT));
+  return Promise.race([Promise.all([fonts, page]), timeout]);
+};
+
+// Intro sequence (~5.5s when everything is already loaded):
+// 1. a bronze dot pulses once
+// 2. the two A's unveil outward from the dot, sharpening from a soft blur as they settle
+// 3. a hairline + 000→100 counter track real loading progress
+// 4. the dark curtain wipes up while A·A flies into the navbar logo's spot
 const Intro = ({ onExitStart, onFinish }) => {
-  const [phase, setPhase] = useState('dots'); // dots -> converge -> letters -> exit
+  const rootRef = useRef(null);
+  const curtainRef = useRef(null);
+  const logoRef = useRef(null);
+  const dotRef = useRef(null);
+  const progressRef = useRef(null);
+  const barRef = useRef(null);
+  const counterRef = useRef(null);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('converge'), PULSE_MS);
-    const t2 = setTimeout(
-      () => setPhase('letters'),
-      PULSE_MS + CONVERGE_MS + HOLD_MS
-    );
-    const t3 = setTimeout(
-      () => {
-        setPhase('exit');
-        onExitStart?.(); // lets the page mount underneath while the intro fades out
-      },
-      PULSE_MS + CONVERGE_MS + HOLD_MS + SLIDE_MS + REVEAL_MS
-    );
-    const t4 = setTimeout(onFinish, AUTO_DISMISS_MS);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const html = document.documentElement;
+    let cancelled = false;
+
+    const ctx = gsap.context(() => {
+      const letters = logoRef.current.querySelectorAll('.intro-letter');
+
+      const [leftLetter, rightLetter] = letters;
+
+      // ---- Starting state ----
+      gsap.set(dotRef.current, { scale: 0 });
+      // Each A starts fully clipped on its dot-facing side, soft and slightly enlarged
+      gsap.set(leftLetter, { clipPath: 'inset(0% 0% 0% 100%)', transformOrigin: 'right center' });
+      gsap.set(rightLetter, { clipPath: 'inset(0% 100% 0% 0%)', transformOrigin: 'left center' });
+      gsap.set(letters, { filter: 'blur(10px)', scale: 1.08, opacity: 0 });
+      gsap.set(barRef.current, { scaleX: 0, transformOrigin: 'left center' });
+
+      // ---- 1 + 2: dot pulse, then the A's unveil outward from the dot ----
+      // The clip opens from the dot's side outward while each letter sharpens and settles
+      const reveal = gsap.timeline();
+      reveal
+        .to(dotRef.current, { scale: 1.6, duration: 0.5, ease: 'power2.out' })
+        .to(dotRef.current, { scale: 1, duration: 0.6, ease: 'power2.inOut' })
+        .to(letters, {
+          clipPath: 'inset(0% 0% 0% 0%)',
+          duration: 2,
+          ease: 'power4.inOut',
+        }, 0.6)
+        .to(letters, {
+          filter: 'blur(0px)',
+          scale: 1,
+          opacity: 1,
+          duration: 2.2,
+          ease: 'power3.out',
+        }, 0.6)
+        // Let the finished A·A rest a moment before the curtain lifts
+        .to({}, { duration: HOLD });
+
+      // ---- 3: real loading progress ----
+      const progress = { value: 0 };
+      const renderProgress = () => {
+        // ctx.revert() on unmount re-renders this tween after the counter has left the DOM –
+        // bail out instead of throwing (a throw here would take down the whole app)
+        if (cancelled || !counterRef.current) return;
+        counterRef.current.textContent = String(Math.round(progress.value * 100)).padStart(3, '0');
+        gsap.set(barRef.current, { scaleX: progress.value });
+      };
+      // Creep toward 90% while the reveal plays; the last 10% waits for real loading
+      gsap.to(progress, { value: 0.9, duration: reveal.duration(), ease: 'power2.out', onUpdate: renderProgress });
+
+      const revealDone = new Promise((resolve) => reveal.eventCallback('onComplete', resolve));
+
+      Promise.all([revealDone, waitForAssets()]).then(() => {
+        if (cancelled) return;
+        gsap.to(progress, {
+          value: 1,
+          duration: 0.4,
+          ease: 'power2.out',
+          overwrite: true,
+          onUpdate: renderProgress,
+          onComplete: exit,
+        });
+      });
+
+      // ---- 4: curtain + logo handoff ----
+      function exit() {
+        if (cancelled) return;
+
+        // Hide the navbar logo (and skip its own slide-in) until our logo lands on it
+        html.classList.add('intro-handoff');
+        onExitStart?.(); // mounts the site underneath
+
+        // Wait two frames so the site (and the navbar logo) exist and have layout
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (cancelled) return;
+          const target = document.querySelector('.navbar-logo');
+          const logo = logoRef.current;
+
+          const done = () => {
+            html.classList.remove('intro-handoff');
+            html.classList.add('intro-done');
+            onFinish?.();
+          };
+
+          const tl = gsap.timeline({ onComplete: done });
+          tl.to(progressRef.current, { opacity: 0, duration: 0.3 }, 0);
+          tl.to(curtainRef.current, {
+            clipPath: 'inset(0% 0% 100% 0%)',
+            duration: reduceMotion ? 0.01 : 1.2,
+            ease: EASE,
+          }, 0.1);
+
+          if (target && !reduceMotion) {
+            const from = logo.getBoundingClientRect();
+            const to = target.getBoundingClientRect();
+            // Same letter size as the navbar logo
+            const scale = parseFloat(getComputedStyle(target).fontSize) /
+              parseFloat(getComputedStyle(logo).fontSize);
+
+            // Our dot has more space around it than the navbar's "·", so at navbar size our logo
+            // would land wider and the two wouldn't line up during the swap. Tighten the dot's
+            // margins during the flight so the landed width matches exactly.
+            const dot = dotRef.current;
+            const margin = parseFloat(getComputedStyle(dot).marginLeft);
+            const extraWidth = from.width - to.width / scale;
+            const landedMargin = Math.max(0, margin - extraWidth / 2);
+
+            // Letters and dot shift to the navbar logo's brown together, so they always match
+            tl.to(logo, {
+              x: to.left + to.width / 2 - (from.left + from.width / 2),
+              y: to.top + to.height / 2 - (from.top + from.height / 2),
+              scale,
+              color: BROWN,
+              duration: 1.2,
+              ease: EASE,
+            }, 0.1);
+            tl.to(dot, {
+              backgroundColor: BROWN,
+              marginLeft: landedMargin,
+              marginRight: landedMargin,
+              duration: 1.2,
+              ease: EASE,
+            }, 0.1);
+
+            // Crossfade into the real navbar logo as ours glides into place (not after it stops):
+            // the real one fades in (see .intro-done in index.css) while ours fades out on top of it
+            tl.add(() => html.classList.replace('intro-handoff', 'intro-done'), 1.0);
+            tl.to(logo, { opacity: 0, duration: 0.6, ease: 'power1.inOut' }, 1.0);
+          } else {
+            // No navbar on this page (or reduced motion) – just fade the logo out
+            tl.to(logo, { opacity: 0, duration: 0.5 }, 0);
+          }
+        }));
+      }
+    }, rootRef);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
+      cancelled = true;
+      ctx.revert();
+      html.classList.remove('intro-handoff');
     };
   }, [onExitStart, onFinish]);
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center"
-      style={{
-        backgroundColor: '#322D29',
-        color: '#EFE9E1',
-        // Fade the brown backdrop out with the logo so the cream page doesn't pop in
-        opacity: phase === 'exit' ? 0 : 1,
-        pointerEvents: phase === 'exit' ? 'none' : 'auto',
-        transition: `opacity ${EXIT_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-      }}
-    >
-      <style>{`
-        /* Loading wave: each dot rises, brightens and grows in turn, then settles */
-        @keyframes dotLoading {
-          0%, 60%, 100% { transform: translate(-50%, -50%) translateX(var(--x)) translateY(0) scale(0.75); opacity: 0.3; }
-          30% { transform: translate(-50%, -50%) translateX(var(--x)) translateY(-10px) scale(1); opacity: 1; }
-        }
-
-        @keyframes convergeLeft {
-          0% { transform: translate(-50%, -50%) translateX(-${DOT_GAP}px); opacity: 1; }
-          100% { transform: translate(-50%, -50%) translateX(0px); opacity: 0; }
-        }
-
-        @keyframes convergeRight {
-          0% { transform: translate(-50%, -50%) translateX(${DOT_GAP}px); opacity: 1; }
-          100% { transform: translate(-50%, -50%) translateX(0px); opacity: 0; }
-        }
-
-        @keyframes centerDotPop {
-          0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-          60% { transform: translate(-50%, -50%) scale(1.35); opacity: 1; }
-          100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-
-        @keyframes slideOutLeft {
-          0% { transform: translateX(0); opacity: 0; }
-          100% { transform: translateX(-0.25em); opacity: 1; }
-        }
-
-        @keyframes slideOutRight {
-          0% { transform: translateX(0); opacity: 0; }
-          100% { transform: translateX(0.25em); opacity: 1; }
-        }
-
-        @keyframes introExit {
-          0% { opacity: 1; filter: blur(0px); transform: scale(1); letter-spacing: normal; }
-          100% { opacity: 0; filter: blur(4px); transform: scale(1.04); letter-spacing: 0.04em; }
-        }
-
-        .intro-dot {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          border-radius: 9999px;
-          background-color: #EFE9E1;
-        }
-
-        .intro-dot--pulse {
-          width: 10px;
-          height: 10px;
-          animation: dotLoading 1200ms ease-in-out infinite both;
-        }
-
-        .intro-dot--converge-left {
-          animation: convergeLeft ${CONVERGE_MS}ms cubic-bezier(0.45, 0, 0.55, 1) forwards;
-        }
-
-        .intro-dot--converge-right {
-          animation: convergeRight ${CONVERGE_MS}ms cubic-bezier(0.45, 0, 0.55, 1) forwards;
-        }
-
-        .intro-center-dot {
-          width: 10px;
-          height: 10px;
-        }
-
-        .intro-center-dot--pop {
-          animation: centerDotPop 420ms ease-out ${CONVERGE_MS - 150}ms both;
-        }
-
-        .intro-letter-left {
-          display: inline-block;
-          animation: slideOutLeft ${SLIDE_MS}ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .intro-letter-right {
-          display: inline-block;
-          animation: slideOutRight ${SLIDE_MS}ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .intro-exit {
-          animation: introExit ${EXIT_MS}ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-      `}</style>
-
+    <div ref={rootRef} className="fixed inset-0 z-[60] pointer-events-none">
+      {/* Dark curtain – wipes upward to reveal the site */}
       <div
-        className={`relative flex h-32 w-32 items-center justify-center ${
-          phase === 'exit' ? 'intro-exit' : ''
-        }`}
-      >
-        {phase === 'dots' && (
-          <>
-            <span
-              className="intro-dot intro-dot--pulse"
-              style={{ '--x': `-${DOT_GAP}px`, animationDelay: '0ms' }}
-            />
-            <span
-              className="intro-dot intro-dot--pulse"
-              style={{ '--x': '0px', animationDelay: '160ms' }}
-            />
-            <span
-              className="intro-dot intro-dot--pulse"
-              style={{ '--x': `${DOT_GAP}px`, animationDelay: '320ms' }}
-            />
-          </>
-        )}
+        ref={curtainRef}
+        className="absolute inset-0 pointer-events-auto"
+        style={{ backgroundColor: BROWN, clipPath: 'inset(0% 0% 0% 0%)' }}
+      />
 
-        {phase === 'converge' && (
-          <>
-            <span
-              className="intro-dot intro-dot--converge-left"
-              style={{ width: '10px', height: '10px' }}
-            />
-            <span
-              className="intro-dot intro-center-dot intro-center-dot--pop"
-              style={{ transform: 'translate(-50%, -50%)' }}
-            />
-            <span
-              className="intro-dot intro-dot--converge-right"
-              style={{ width: '10px', height: '10px' }}
-            />
-          </>
-        )}
-
-        {(phase === 'letters' || phase === 'exit') && (
-          <div
-            className="intro-dot intro-center-dot"
-            style={{ transform: 'translate(-50%, -50%)', opacity: 1 }}
+      {/* A · A – each letter unveils outward from the dot; the dot is the middle "·".
+          Letters and dot share the same bronze. Top padding keeps Claverin's tall
+          glyphs inside the clip. */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <h1
+          ref={logoRef}
+          className="font-claverin flex items-center text-6xl md:text-7xl font-bold tracking-tight leading-none"
+          style={{ color: BRONZE }}
+        >
+          <span className="intro-letter block pt-[0.12em]">A</span>
+          <span
+            ref={dotRef}
+            className="block w-2 h-2 md:w-2.5 md:h-2.5 rounded-full"
+            // Inline margin – the global * { margin: 0 } in index.css cancels margin utilities
+            style={{ backgroundColor: BRONZE, marginInline: '0.18em' }}
           />
-        )}
+          <span className="intro-letter block pt-[0.12em]">A</span>
+        </h1>
+      </div>
 
-        {(phase === 'letters' || phase === 'exit') && (
-          <h1
-            className="font-claverin flex items-baseline text-5xl font-bold tracking-tight"
-            style={{ color: '#EFE9E1' }}
-          >
-            <span className="intro-letter-left">A</span>
-            <span style={{ visibility: 'hidden' }}>&middot;</span>
-            <span className="intro-letter-right">A</span>
-          </h1>
-        )}
+      {/* Loading progress – label, counter and a hairline along the bottom */}
+      <div
+        ref={progressRef}
+        className="absolute inset-x-0 bottom-0 px-6 md:px-10 xl:px-12 pb-6 md:pb-8 flex flex-col gap-3"
+        style={{ color: CREAM }}
+      >
+        <div className="flex justify-between items-end font-general-sans font-light tracking-wider text-xs md:text-sm">
+          <span className="opacity-60">(Portfolio)</span>
+          <span ref={counterRef} className="tabular-nums">000</span>
+        </div>
+        <div className="relative h-px w-full bg-[#EFE9E1]/15">
+          <div ref={barRef} className="absolute inset-0 bg-[#EFE9E1]/80" />
+        </div>
       </div>
     </div>
   );
