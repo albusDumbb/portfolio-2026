@@ -122,9 +122,7 @@ const TechStack = ({ id }) => {
                                 {tech}
                             </span>
                             {/* Separator after every name (including the last) so both halves are identical */}
-                            <span aria-hidden="true" className="text-[#A68A64] text-xl md:text-3xl xl:text-4xl shrink-0 select-none">
-                                ✦
-                            </span>
+                            <span aria-hidden="true" className="w-2 h-2 md:w-3 md:h-3 xl:w-4 xl:h-4 rounded-full bg-[#EFE9E1] shrink-0 select-none" />
                         </Fragment>
                     ))}
                 </div>

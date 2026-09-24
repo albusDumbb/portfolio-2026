@@ -33,7 +33,6 @@ const Expertise = ({ id }) => {
     const mainRef = useRef(null);
     const stageRef = useRef(null);
     const contentRef = useRef(null);
-    const headerRef = useRef(null);
     const rowRefs = useRef([]);
     const progressRef = useRef(null);
     const barRef = useRef(null);
@@ -106,25 +105,12 @@ const Expertise = ({ id }) => {
 
             // On screens too short to fit everything, scroll the content up by exactly
             // the overflow while rows 2 and 3 are active, so the last one is fully
-            // visible before TechStack arrives. On tall screens this is 0.
+            // visible before the next section arrives. On tall screens this is 0.
             tl.fromTo(contentRef.current,
                 { y: 0 },
                 { y: () => -getOverflow(), duration: rows.length - 1 },
                 INTRO + 0.5
             );
-
-            // Animate header up and fade out when TechStack comes into view
-            gsap.to(headerRef.current, {
-                y: -300,
-                opacity: 0,
-                duration: 3,
-                scrollTrigger: {
-                    trigger: mainRef.current,
-                    start: "bottom bottom",
-                    end: "bottom+=15% bottom",
-                    scrub: 0.5
-                }
-            });
 
             // The progress bar is fixed to the viewport, so it can show up as soon as the
             // section starts scrolling in instead of waiting for the stage to pin
@@ -143,7 +129,7 @@ const Expertise = ({ id }) => {
                 }
             );
 
-            // Fade the progress bar out along with the header
+            // Fade the progress bar out as the section leaves, so it never sits over the next section
             gsap.fromTo(progressRef.current, { autoAlpha: 1 }, {
                 autoAlpha: 0,
                 immediateRender: false,
@@ -174,15 +160,14 @@ const Expertise = ({ id }) => {
                 className="w-full min-h-[250vh] bg-[#EFE9E1] leading-[1.1]"
             >
                 {/* Sticky stage – stays on screen for the whole section.
-                    Extra bottom padding keeps the rows clear of the progress bar. */}
+                    Bottom padding keeps the rows clear of the progress bar. */}
                 <div
                     ref={stageRef}
-                    className="sticky top-0 w-full h-dvh overflow-hidden px-4 md:px-8 xl:px-2 pt-4 pb-20"
+                    className="sticky top-0 w-full h-dvh overflow-hidden px-4 md:px-8 xl:px-2 pt-4 pb-10 md:pb-12"
                 >
                     <div ref={contentRef} className="flex flex-col gap-8">
                         {/* Title Section */}
                         <section
-                            ref={headerRef}
                             className="font-claverin"
                         >
                             <h1 data-cursor="lens" className="text-[#322D29] text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] xl:text-[4.38rem]">AREA OF</h1>
@@ -198,13 +183,16 @@ const Expertise = ({ id }) => {
                                     className="w-full flex flex-col xl:flex-row gap-2 xl:gap-0 xl:justify-between"
                                 >
                                     {/* Number + Satoshi title – a clean sans so the titles don't echo the Claverin header */}
-                                    <aside className="h-fit flex items-start gap-3 md:gap-4 p-2">
-                                        <div className="overflow-hidden shrink-0">
-                                            <p className="expertise-reveal font-general-sans text-xs md:text-sm xl:text-[1rem] text-[#322D29] font-light mt-1.5 md:mt-2.5 xl:mt-3">({item.index})</p>
+                                    {/* Number's digits line up with the top of the title's capitals.
+                                        The padding is the gap between the title's cap line and its line box,
+                                        minus the digits' own gap (measured for each breakpoint's font sizes) */}
+                                    <aside className="h-fit flex items-start gap-2 md:gap-2.5 p-2">
+                                        <div className="overflow-hidden shrink-0 pt-[5.5px] md:pt-[5.75px] xl:pt-[6.25px]">
+                                            <p className="expertise-reveal font-general-sans text-xs md:text-sm xl:text-[1rem] leading-none text-[#322D29] font-light">({item.index})</p>
                                         </div>
                                         <div className="overflow-hidden">
                                             {/* Bottom padding keeps descenders (p, g) clear of the mask */}
-                                            <h2 data-cursor="lens" className="expertise-reveal font-satoshi font-light tracking-[-0.01em] leading-tight pb-[0.08em] text-[1.75rem] md:text-[2.25rem] xl:text-[2.5rem] text-[#322D29]">{item.title}</h2>
+                                            <h2 data-cursor="lens" className="expertise-reveal font-satoshi font-light tracking-[-0.01em] leading-tight pb-[0.08em] text-[1.5rem] md:text-[1.875rem] xl:text-[2.125rem] text-[#322D29]">{item.title}</h2>
                                         </div>
                                     </aside>
 
@@ -239,10 +227,11 @@ const Expertise = ({ id }) => {
 
                     {/* Section progress – fixed to the bottom of the screen while Expertise is in view.
                         Counter, then the bar with a live "Scroll" hint until it starts filling.
+                        Kept slim (tight padding, leading-none) so it takes as little height as possible.
                         Solid background so rows scrolling in pass cleanly underneath; z-30 keeps it under the navbar menu overlay. */}
                     <div
                         ref={progressRef}
-                        className="invisible opacity-0 fixed z-30 inset-x-0 bottom-0 bg-[#EFE9E1] px-4 md:px-8 xl:px-4 pt-3 pb-6 md:pb-8 flex items-center gap-3 md:gap-4 text-[#322D29] font-light text-xs md:text-sm xl:text-base tracking-wider"
+                        className="invisible opacity-0 fixed z-30 inset-x-0 bottom-0 bg-[#EFE9E1] px-4 md:px-8 xl:px-4 pt-2 pb-3 md:pb-4 flex items-center gap-3 md:gap-4 text-[#322D29] font-light text-xs md:text-sm xl:text-base leading-none tracking-wider"
                     >
                         <p className="shrink-0 tabular-nums">
                             <span ref={counterRef}>01</span>

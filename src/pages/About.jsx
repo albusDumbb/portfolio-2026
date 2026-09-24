@@ -5,9 +5,9 @@ import TextReveal from "../components/Animation/TextReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Lead statement – revealed word by word. *Asterisks* mark phrases shown in Claverin.
+// Lead statement – revealed word by word
 const leadText =
-  "I'm a *Full-Stack Web Developer* who turns ideas into modern, scalable, and *user-centered* web applications.";
+  "I'm a Full-Stack Web Developer who turns ideas into modern, scalable, and user-centered web applications.";
 
 // Supporting detail – smaller, fades up once the lead has been read
 const supportingText =

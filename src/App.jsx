@@ -12,8 +12,9 @@ import NavBar from "./components/NavBar";
 import Intro from './components/Intro';
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [showApp, setShowApp] = useState(false);
+  const INTRO_ENABLED = true;
+  const [showIntro, setShowIntro] = useState(INTRO_ENABLED);
+  const [showApp, setShowApp] = useState(!INTRO_ENABLED);
 
   // Stable callbacks so Intro's timers aren't restarted when App re-renders
   const handleIntroExitStart = useCallback(() => setShowApp(true), []);

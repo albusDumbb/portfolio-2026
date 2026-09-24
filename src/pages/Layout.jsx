@@ -49,9 +49,9 @@ const Layout = () => {
       {/* Each section has an id that matches the navbar href */}
       <Home id="home" />
       <About id="about" />
-      <Expertise id="expertise" />
-      <TechStack id="techstack" />
       <Projects id="projects" />
+      <TechStack id="techstack" />
+      <Expertise id="expertise" />
       <Contacts id="contacts" />
     </main>
   );

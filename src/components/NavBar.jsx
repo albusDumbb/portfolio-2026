@@ -131,6 +131,7 @@ const NavBar = () => {
   const navLinks = [
     { label: "HOME", id: "#home" },
     { label: "ABOUT", id: "#about" },
+    { label: "PROJECTS", id: "#projects" },
     { label: "EXPERTISE", id: "#expertise" },
     { label: "CONTACTS", id: "#contacts" },
   ];
