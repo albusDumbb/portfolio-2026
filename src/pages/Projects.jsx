@@ -14,7 +14,6 @@ const cards = [
     roles: ["Frontend Developer", "UI/UX Design"],
     year: "2026",
     image: image1,
-    tone: "#322D29",
     link: "https://lspuiptbm.netlify.app/",
   },
   {
@@ -22,7 +21,6 @@ const cards = [
     roles: ["Frontend Developer", "Backend Developer", "Machine Learning", "UI/UX Design"],
     year: "2025",
     image: image4,
-    tone: "#D9CEBF",
     link: "",
   },
   {
@@ -30,7 +28,6 @@ const cards = [
     roles: ["Frontend Developer", "Backend Developer", "Machine Learning", "UI/UX Design"],
     year: "2025",
     image: image3,
-    tone: "#8A7968",
     link: "",
   },
   {
@@ -38,7 +35,6 @@ const cards = [
     roles: ["Frontend Developer", "UI/UX Design"],
     year: "2024",
     image: image2,
-    tone: "#5B5047",
     link: "",
   },
 ];
@@ -134,9 +130,9 @@ const Projects = ({ id }) => {
         }
       });
 
-      // Image: the backdrop crossfades in place, while the screenshot slides in
-      // from the scroll direction and settles at its true size (never upscaled,
-      // so it stays sharp); the outgoing one drifts the other way and fades out
+      // Image: the incoming screenshot fades in and slides from the scroll
+      // direction, settling at full frame size; the outgoing one drifts the
+      // other way and fades out
       root.querySelectorAll("[data-frame]").forEach((el) => {
         const i = Number(el.dataset.frame);
         const shot = el.querySelector("img");
@@ -162,19 +158,20 @@ const Projects = ({ id }) => {
   const current = cards[active];
 
   return (
+    // The id sits on the wrapper so navbar links land on the heading, not mid-pin
+    <div id={id} className="w-full bg-[#EFE9E1]">
+      {/* Section title – scrolls away normally; the pin below starts at the project name */}
+      <h1 data-cursor="lens" className="font-claverin text-[4.3rem] sm:text-[5rem] md:text-[8.5rem] xl:text-[13.5rem] text-[#322D29] leading-none select-none text-center pt-12 md:pt-20 px-4">
+        PROJECTS
+      </h1>
+
     <section
       ref={sectionRef}
-      id={id}
       className="relative w-full h-dvh overflow-hidden bg-[#EFE9E1] text-[#322D29] px-4 md:px-8 xl:px-16 pt-6 pb-6 md:pt-8 md:pb-8 flex flex-col gap-4 md:gap-5"
     >
       {/* Top row – project name (left), counter + year (right) */}
       <header className="flex items-start justify-between gap-6 shrink-0">
-        {/* Spacing via flex gap/padding – the global * { margin: 0 } overrides margin utilities */}
-        <div className="min-w-0 max-w-[85%] xl:max-w-[70%] flex flex-col gap-2 md:gap-3">
-          {/* span, not p – the global p { font-family } rule would override font-claverin */}
-          <span className="font-claverin text-base md:text-xl text-[#322D29]">
-            (Projects)
-          </span>
+        <div className="min-w-0 max-w-[85%] xl:max-w-[70%]">
           <Stack>
             {cards.map((card, i) => (
               <h2
@@ -247,9 +244,8 @@ const Projects = ({ id }) => {
           </div>
         </aside>
 
-        {/* Image frame – sharp corners, all projects stacked in one frame. Each
-            screenshot floats uncropped on its own backdrop tone, shown at or below
-            its native size so it never looks stretched */}
+        {/* Image frame – all projects stacked in one frame. Each screenshot is shown
+            bare (no backdrop) and scaled to fit with object-contain, so it is never cropped */}
         <div
           data-cursor={current.link ? "view" : "soon"}
           className="relative flex-1 min-h-0 overflow-hidden"
@@ -259,21 +255,21 @@ const Projects = ({ id }) => {
             <div
               key={card.label}
               data-frame={i}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ backgroundColor: card.tone }}
+              className="absolute inset-0"
             >
               <img
                 src={card.image}
                 alt={card.label}
                 loading={i === 0 ? "eager" : "lazy"}
                 decoding="async"
-                className="block w-auto h-auto max-w-[86%] max-h-[78%] md:max-w-[78%] md:max-h-[80%] object-contain will-change-transform shadow-[0_40px_80px_-30px_rgba(20,16,13,0.55),0_12px_24px_-12px_rgba(20,16,13,0.35)] [filter:saturate(0.9)_contrast(1.03)]"
+                className="block w-full h-full object-contain will-change-transform"
               />
             </div>
           ))}
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

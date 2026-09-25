@@ -26,6 +26,8 @@ const parseWords = (text) => {
 const TextReveal = ({
   children,
   className = "",
+  // Desktop alignment of the word layout (mobile is always justified)
+  alignClassName = "justify-center text-center",
   textClassName = "font-general-sans text-[1.75rem] md:text-[2.5rem] xl:text-[3.25rem] leading-tight font-extralight text-[#EFE9E1]",
 }) => {
   const ref = useRef(null);
@@ -80,7 +82,7 @@ const TextReveal = ({
     <div ref={ref} className={className}>
       {/* Mobile (below md): flowing text so it can be justified – straight left and right edges.
           md and up: the original centered flex layout. */}
-      <div className={`flex flex-wrap justify-center gap-x-1.5 gap-y-2 text-center max-md:block max-md:text-justify ${textClassName}`}>
+      <div className={`flex flex-wrap ${alignClassName} gap-x-1.5 gap-y-2 max-md:block max-md:text-justify ${textClassName}`}>
         {words.map(({ word, highlight }, index) => (
           <Fragment key={index}>
             <span
