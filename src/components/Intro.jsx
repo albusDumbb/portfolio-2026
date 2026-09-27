@@ -197,7 +197,7 @@ const Intro = ({ onExitStart, onFinish }) => {
           Letters and dot share the same bronze. Top padding keeps Claverin's tall
           glyphs inside the clip. */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <h1
+        <div
           ref={logoRef}
           className="font-claverin flex items-center text-6xl md:text-7xl font-bold tracking-tight leading-none"
           style={{ color: BRONZE }}
@@ -210,7 +210,7 @@ const Intro = ({ onExitStart, onFinish }) => {
             style={{ backgroundColor: BRONZE, marginInline: '0.18em' }}
           />
           <span className="intro-letter block pt-[0.12em]">A</span>
-        </h1>
+        </div>
       </div>
 
       {/* Loading progress – label, counter and a hairline along the bottom */}

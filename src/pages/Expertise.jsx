@@ -170,8 +170,8 @@ const Expertise = ({ id }) => {
                         <section
                             className="font-claverin"
                         >
-                            <h1 data-cursor="lens" className="text-[#322D29] text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] xl:text-[4.38rem]">AREA OF</h1>
-                            <h1 data-cursor="lens" className="text-[#322D29] text-[4rem] sm:text-[5rem] md:text-[7rem] xl:text-[12rem]">EXPERTISE</h1>
+                            <h2 data-cursor="lens" className="text-[#322D29] text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] xl:text-[4.38rem]">AREA OF</h2>
+                            <h2 data-cursor="lens" className="text-[#322D29] text-[4rem] sm:text-[5rem] md:text-[7rem] xl:text-[12rem]">EXPERTISE</h2>
                         </section>
 
                         {/* Rows – each piece of text slides up from its own mask */}

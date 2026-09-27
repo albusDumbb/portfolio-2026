@@ -53,9 +53,9 @@ const Home = ({ id }) => {
                 </span>
                 <div>
                   {/* Top padding in em scales with each line's size, so the reveal mask never clips the tall Claverin glyphs */}
-                  <h1 data-cursor="lens" className={`font-claverin uppercase text-[#322D29] leading-none pt-[0.12em] ${role.size}`}>
+                  <h2 data-cursor="lens" className={`font-claverin uppercase text-[#322D29] leading-none pt-[0.12em] ${role.size}`}>
                     {role.title}
-                  </h1>
+                  </h2>
                   <p className="text-[#322D29]/70 font-light tracking-wider text-xs md:text-sm xl:text-base">
                     {role.note}
                   </p>
@@ -69,12 +69,13 @@ const Home = ({ id }) => {
       {/* Bottom meta row – name small */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 border-t border-[#322D29]/30 pt-4 items-end">
         <div className="overflow-hidden">
-          <p
-            className="font-claverin text-[#322D29] text-xs md:text-sm xl:text-base tracking-[0.15em] animate-slide-in-up-footer"
+          {/* The page's single h1 – proper case in the source for search engines, uppercased visually */}
+          <h1
+            className="font-claverin uppercase text-[#322D29] text-xs md:text-sm xl:text-base tracking-[0.15em] animate-slide-in-up-footer"
             style={{ transform: "translateY(250px)" }}
           >
-            ALEJANDREI APOLO DURAN
-          </p>
+            Alejandrei Apolo Duran
+          </h1>
         </div>
         <div className="overflow-hidden">
           <p

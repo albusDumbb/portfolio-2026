@@ -61,18 +61,18 @@ const Contacts = ({ id }) => {
                 className="w-full min-h-dvh bg-[#322D29] flex flex-col gap-10 md:gap-12 xl:gap-16 items-center pt-12 pb-6 md:pb-8 px-4 md:px-8 xl:px-4"
             >
                 <header>
-                    <h1 data-cursor="lens" className="font-claverin text-[4.3rem] sm:text-[5rem] md:text-[8.5rem] xl:text-[15rem] text-[#EFE9E1] leading-none select-none text-center">
+                    <h2 data-cursor="lens" className="font-claverin text-[4.3rem] sm:text-[5rem] md:text-[8.5rem] xl:text-[15rem] text-[#EFE9E1] leading-none select-none text-center">
                         CONTACTS
-                    </h1>
+                    </h2>
                 </header>
 
                 {/* flex-1 pushes the footer to the bottom of the section */}
                 <section className="w-full flex-1 flex flex-col gap-10 md:gap-12 max-w-2xl xl:max-w-none">
                     {/* Description */}
                     <aside className="flex flex-col gap-4 md:gap-6">
-                        <h1 className="font-claverin text-[#EFE9E1] text-[1.5rem] sm:text-[1.75rem] md:text-[2rem] xl:text-[2.25rem] leading-none">
+                        <p className="font-claverin text-[#EFE9E1] text-[1.5rem] sm:text-[1.75rem] md:text-[2rem] xl:text-[2.25rem] leading-none">
                             Alejandrei Apolo M. Duran
-                        </h1>
+                        </p>
                         <p className="text-[#EFE9E1] opacity-50 text-base md:text-lg xl:text-[1.25rem] font-extralight">
                             Full-Stack Web Developer specializing in modern web applications, intuitive user experiences, and scalable backend solutions. Passionate about building efficient, user-centered digital products and continuously learning new technologies.
                         </p>

@@ -76,9 +76,9 @@ const About = ({ id }) => {
       id={id}
       className="w-full h-fit bg-[#322D29] flex flex-col items-center gap-10 md:gap-14 py-12 md:pb-20 px-4 md:px-8 xl:px-16"
     >
-      <h1 data-cursor="lens" className="font-claverin text-[6.5rem] xl:text-[20rem] text-[#EFE9E1] leading-none select-none">
+      <h2 data-cursor="lens" className="font-claverin text-[6.5rem] xl:text-[20rem] text-[#EFE9E1] leading-none select-none">
         ABOUT
-      </h1>
+      </h2>
 
       {/* Editorial split – lead (left, sticky on desktop), details (right). Stacks on mobile */}
       <div className="w-full grid md:grid-cols-[1.1fr_1fr] gap-10 md:gap-16 xl:gap-24 items-start">

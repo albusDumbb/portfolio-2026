@@ -161,9 +161,9 @@ const Projects = ({ id }) => {
     // The id sits on the wrapper so navbar links land on the heading, not mid-pin
     <div id={id} className="w-full bg-[#EFE9E1]">
       {/* Section title – scrolls away normally; the pin below starts at the project name */}
-      <h1 data-cursor="lens" className="font-claverin text-[4.3rem] sm:text-[5rem] md:text-[8.5rem] xl:text-[13.5rem] text-[#322D29] leading-none select-none text-center pt-12 md:pt-20 px-4">
+      <h2 data-cursor="lens" className="font-claverin text-[4.3rem] sm:text-[5rem] md:text-[8.5rem] xl:text-[13.5rem] text-[#322D29] leading-none select-none text-center pt-12 md:pt-20 px-4">
         PROJECTS
-      </h1>
+      </h2>
 
     <section
       ref={sectionRef}
