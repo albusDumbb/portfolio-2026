@@ -27,12 +27,14 @@ const Contacts = ({ id }) => {
         {
             icon: <Phone size={20}/>,
             label: "Contact Number",
-            desc: "09623367401"
+            desc: "09623367401",
+            href: "tel:+639623367401"
         },
         {
             icon: <Mail size={20}/>,
             label: "Email",
-            desc: "alejandreiduran@gmail.com"
+            desc: "alejandreiduran@gmail.com",
+            href: "mailto:alejandreiduran@gmail.com"
         },
     ]
 
@@ -40,19 +42,57 @@ const Contacts = ({ id }) => {
         {
             icon: <MessageCircle size={20}/>,
             label: "Messenger",
-            desc: "@alejandrei.duran.2024"
+            desc: "@alejandrei.duran.2024",
+            href: "https://m.me/alejandrei.duran.2024"
         },
         {
             icon: <UserRound size={20}/>,
             label: "Facebook",
-            desc: "Alejandrei Duran"
+            desc: "Alejandrei Duran",
+            href: "https://www.facebook.com/alejandrei.duran.2024"
         },
         {
             icon: <Camera size={20}/>,
             label: "Instagram",
-            desc: "@alejandreiduran"
+            desc: "@alejandreiduran",
+            href: "https://www.instagram.com/alejandreiduran/"
         },
     ]
+
+    const github = {
+        icon: <GitBranch size={20}/>,
+        label: "GitHub",
+        desc: "albusDumbb",
+        href: "https://github.com/albusDumbb"
+    }
+
+    // Real links let visitors tap straight through, and rel="me" tells search engines these profiles belong to this site's owner
+    const renderItem = (data) => (
+        <aside
+            key={data.label}
+            className="flex flex-col "
+        >
+            <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light flex gap-2 items-center">
+                <p>{data.icon}</p>
+                <p>{data.label}</p>
+            </span>
+
+            {data.href ? (
+                <a
+                    href={data.href}
+                    {...(data.href.startsWith("http") && { target: "_blank", rel: "me noopener noreferrer" })}
+                    data-cursor="link"
+                    className="w-fit text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light transition-opacity duration-300 hover:opacity-100"
+                >
+                    {data.desc}
+                </a>
+            ) : (
+                <span data-cursor="text" className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
+                    <p>{data.desc}</p>
+                </span>
+            )}
+        </aside>
+    )
 
     return(
         <>
@@ -85,55 +125,16 @@ const Contacts = ({ id }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-0">
                         {/* First Col */}
                         <div className="flex flex-col gap-8">
-                            {listA.map((data, index) => (
-                                <aside
-                                    key={index}
-                                    className="flex flex-col "
-                                >
-                                    <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light flex gap-2 items-center">
-                                        <p>{data.icon}</p>
-                                        <p>{data.label}</p>
-                                    </span>
-
-                                    <span data-cursor="text" className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
-                                        <p>{data.desc}</p>
-                                    </span>
-                                </aside>
-                            ))}
+                            {listA.map(renderItem)}
                         </div>
 
                         {/* Second Col */}
                         <div className="flex flex-col gap-8">
-                            {listB.map((data, index) => (
-                                <aside
-                                    key={index}
-                                    className="flex flex-col "
-                                >
-                                    <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light flex gap-2 items-center">
-                                        <p>{data.icon}</p>
-                                        <p>{data.label}</p>
-                                    </span>
-
-                                    <span data-cursor="text" className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
-                                        <p>{data.desc}</p>
-                                    </span>
-                                </aside>
-                            ))}
+                            {listB.map(renderItem)}
                         </div>
 
                         {/* Third Col */}
-                        <aside
-                            className="flex flex-col "
-                        >
-                            <span className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] font-light flex gap-2 items-center">
-                                <p><GitBranch size={20}/></p>
-                                <p>GitHub</p>
-                            </span>
-
-                            <span data-cursor="text" className="text-[#EFE9E1] text-[0.9rem] md:text-[1rem] opacity-50 font-light">
-                                <p>albusDumbb</p>
-                            </span>
-                        </aside>
+                        {renderItem(github)}
                     </div>
                 </section>
 
