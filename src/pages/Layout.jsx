@@ -27,8 +27,8 @@ const Layout = () => {
       // fling, with a light weighted feel that still keeps up with the finger.
       // Desktop wheel scrolling is unaffected
       syncTouch: true,
-      touchMultiplier: 1,
-      syncTouchLerp: 0.1,
+      touchMultiplier: 1.2,
+      syncTouchLerp: 0.2,
       touchInertiaExponent: 1.7,
     });
 
