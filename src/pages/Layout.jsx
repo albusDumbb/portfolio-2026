@@ -23,13 +23,6 @@ const Layout = () => {
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 0.65,
-      // Touch (mobile/tablet): route swipes through Lenis instead of the native
-      // fling, with a light weighted feel that still keeps up with the finger.
-      // Desktop wheel scrolling is unaffected
-      syncTouch: true,
-      touchMultiplier: 1.2,
-      syncTouchLerp: 0.2,
-      touchInertiaExponent: 1.7,
     });
 
     // Make Lenis instance globally accessible (for NavBar click handlers)
