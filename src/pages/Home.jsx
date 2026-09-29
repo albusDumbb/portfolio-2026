@@ -8,6 +8,14 @@ const Home = ({ id }) => {
   const secondarySize =
     "text-[clamp(2.5rem,min(15vw,7.5dvh),5rem)] md:text-[clamp(2.5rem,min(8vw,14dvh),10rem)]";
 
+  const scrollToAbout = () => {
+    if (window.lenis) {
+      window.lenis.scrollTo("#about");
+    } else {
+      document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const roles = [
     { index: "01", title: "Full Stack", note: "Web Developer", align: "justify-start", size: primarySize, delay: "0.2s" },
     { index: "02", title: "UI/UX Design", note: "Interfaces & Experience", align: "justify-end", size: secondarySize, delay: "0.35s" },
@@ -90,7 +98,20 @@ const Home = ({ id }) => {
             className={`${metaTextStyle} md:text-right animate-slide-in-up-footer`}
             style={{ transform: "translateY(250px)" }}
           >
-            Scroll to explore ↓
+            <button
+              type="button"
+              onClick={scrollToAbout}
+              className="scroll-cue group inline-flex items-center gap-2 cursor-pointer"
+              aria-label="Scroll to the About section"
+            >
+              <span className="relative pb-0.5">
+                Scroll to explore
+                <span aria-hidden="true" className="scroll-cue-line absolute left-0 bottom-0 h-px w-full bg-[#322D29]" />
+              </span>
+              <span aria-hidden="true" className="relative inline-flex overflow-hidden h-[1.2em] w-[0.8em] justify-center">
+                <span className="scroll-cue-arrow">↓</span>
+              </span>
+            </button>
           </p>
         </div>
       </section>

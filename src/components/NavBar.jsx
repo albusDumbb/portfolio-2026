@@ -17,7 +17,7 @@ const HIDE_AFTER = 120;
 // Ignore scroll movements smaller than this (trackpad jitter, Lenis easing)
 const SCROLL_THRESHOLD = 10;
 // Matches the longest .nav-revealing transition in index.css (drop + expand + fade-in)
-const REVEAL_DURATION = 1200;
+const REVEAL_DURATION = 600;
 
 const NavBar = () => {
   const navbarRef = useRef(null);

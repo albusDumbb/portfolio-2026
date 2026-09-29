@@ -106,34 +106,34 @@ html.lenis, html.lenis body {
   transform: translateY(calc(-100% - 16px));
   pointer-events: none;
   transition:
-    width 0.55s cubic-bezier(0.76, 0, 0.24, 1),
-    padding 0.55s cubic-bezier(0.76, 0, 0.24, 1),
-    border-radius 0.55s cubic-bezier(0.76, 0, 0.24, 1),
-    margin-top 0.55s cubic-bezier(0.76, 0, 0.24, 1),
-    background-color 0.4s ease,
-    box-shadow 0.4s ease,
-    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1) 0.45s,
-    opacity 0.3s ease 0.65s;
+    width 0.28s cubic-bezier(0.76, 0, 0.24, 1),
+    padding 0.28s cubic-bezier(0.76, 0, 0.24, 1),
+    border-radius 0.28s cubic-bezier(0.76, 0, 0.24, 1),
+    margin-top 0.28s cubic-bezier(0.76, 0, 0.24, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.28s cubic-bezier(0.76, 0, 0.24, 1) 0.18s,
+    opacity 0.15s ease 0.3s;
 }
 .navbar-header.nav-hidden nav {
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.12s ease;
 }
 
 .navbar-header.nav-revealing {
   overflow: hidden;
   transition:
-    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1),
-    opacity 0.25s ease,
-    width 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
-    padding 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
-    border-radius 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
-    margin-top 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.4s,
-    background-color 0.6s ease 0.4s,
-    box-shadow 0.6s ease 0.4s;
+    transform 0.28s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.15s ease,
+    width 0.32s cubic-bezier(0.76, 0, 0.24, 1) 0.18s,
+    padding 0.32s cubic-bezier(0.76, 0, 0.24, 1) 0.18s,
+    border-radius 0.32s cubic-bezier(0.76, 0, 0.24, 1) 0.18s,
+    margin-top 0.32s cubic-bezier(0.76, 0, 0.24, 1) 0.18s,
+    background-color 0.32s ease 0.18s,
+    box-shadow 0.32s ease 0.18s;
 }
 .navbar-header.nav-revealing nav {
-  transition: opacity 0.35s ease 0.8s;
+  transition: opacity 0.2s ease 0.38s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -298,10 +298,56 @@ html.intro-done .navbar-logo {
   animation: hintGlide 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
+/* Hero – "Scroll to explore" cue */
+/* Underline draws in from the left, then exits to the right */
+@keyframes scrollCueLine {
+  0% { transform: scaleX(0); transform-origin: left; }
+  40% { transform: scaleX(1); transform-origin: left; }
+  60% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+.scroll-cue-line {
+  transform: scaleX(0);
+  animation: scrollCueLine 2.4s cubic-bezier(0.65, 0, 0.35, 1) 2.2s infinite;
+}
+
+/* Arrow drops out of its mask and re-enters from above */
+@keyframes scrollCueArrow {
+  0%, 20% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(110%); opacity: 0; }
+  51% { transform: translateY(-110%); opacity: 0; }
+  80%, 100% { transform: translateY(0); opacity: 1; }
+}
+.scroll-cue-arrow {
+  display: inline-block;
+  animation: scrollCueArrow 1.6s cubic-bezier(0.65, 0, 0.35, 1) 2.2s infinite;
+}
+
+/* Hover/focus: underline holds, arrow speeds up */
+.scroll-cue:hover .scroll-cue-line,
+.scroll-cue:focus-visible .scroll-cue-line {
+  animation: none;
+  transform: scaleX(1);
+  transition: transform 0.3s ease;
+}
+.scroll-cue:hover .scroll-cue-arrow,
+.scroll-cue:focus-visible .scroll-cue-arrow {
+  animation-duration: 0.9s;
+}
+.scroll-cue:focus-visible {
+  outline: 1px solid #322D29;
+  outline-offset: 4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-hint-nudge,
-  .animate-hint-glide {
+  .animate-hint-glide,
+  .scroll-cue-arrow {
     animation: none;
+  }
+  .scroll-cue-line {
+    animation: none;
+    transform: scaleX(1);
   }
 }
 

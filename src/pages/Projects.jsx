@@ -223,7 +223,7 @@ const Projects = ({ id }) => {
           </Stack>
 
           <div className="flex flex-col items-end md:items-start gap-3 font-general-sans text-xs md:text-sm shrink-0">
-            {current.link ? (
+            {current.link && (
               <a
                 href={current.link}
                 target="_blank"
@@ -235,8 +235,6 @@ const Projects = ({ id }) => {
                 <span className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
                 <span className="absolute left-0 -bottom-0.5 h-px w-full bg-[#322D29] origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-x-100" />
               </a>
-            ) : (
-              <span className="text-[#322D29]/40">Coming soon</span>
             )}
             <span className="flex items-center gap-1">
               scroll <span aria-hidden="true">↑↓</span>
